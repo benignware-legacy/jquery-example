@@ -37,3 +37,18 @@ You can customize the insertion point of your original working demo by adding an
 ```
 <div data-example="example1"></div>
 ```
+
+#### Manually initialize the example-plugin
+By default, jquery-example auto-initializes examples on document.ready. If you don't want this behavior, you can switch it off by setting the "initOnReady"-Option directly after the script is loaded:
+```
+$.fn['example'].initOnReady = false;
+```
+
+You'll then need to initialize example-elements on your own: 
+```
+$(function() {
+  $("*[data-example]").example();
+});
+
+```
+
