@@ -4,8 +4,8 @@ jquery-example
 Quickly create html inline examples
 
 
-Basic usage
------------
+Usage
+-----
 
 Declare any script-, style- or markup-block as an example by adding a data-example-attribute with an identifier to the corresponding element.
 
