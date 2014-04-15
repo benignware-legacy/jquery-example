@@ -33,9 +33,9 @@ Declare any script-, style- or markup-block as an example by adding a data-examp
 
 The provided code will be inserted as a pre-tag in place.
 
-You can customize the insertion point of your original working demo by adding an empty example-element targeting the example group identifier like this:
+You can customize the insertion point of your original working demo by specifying 'before' or 'after' on the 'example-insert'-data-attribute. Defaults to 'after'.
 ```
-<div data-example="example1"></div>
+<div id="div" data-example="example1" data-example-insert="before">Hello, I'm a div</div>
 ```
 
 #### Manually initialize the example-plugin
