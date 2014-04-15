@@ -56,6 +56,4 @@ You'll then need to initialize example-elements on your own:
 $(function() {
   $("*[data-example]").example();
 });
-
 ```
-
