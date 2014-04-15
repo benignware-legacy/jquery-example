@@ -34,18 +34,36 @@
       <p>Declare any script-, style- or markup-block as an example by adding an <code>example</code>-data-attribute with an identifier to the corresponding element.</p>
 
       <p>For "example", the following code...</p>
-      <pre>&lt;h4&gt;Markup of a div-element&lt;/h4&gt;<br/>&lt;!-- declare an example markup block by using the data-example-attribute --&gt;<br/>&lt;div id=&quot;div&quot; data-example=&quot;example1&quot;&gt;Hello, I'm a div&lt;/div&gt;<br/>      <br/>&lt;h4&gt;Styling a div-element using an inline style block:&lt;/h4&gt;<br/>&lt;!-- declare an example style block by using the data-example-attribute --&gt;<br/>&lt;style data-example=&quot;example1&quot;&gt;<br/>  /* style declaration */<br/>  #div {<br/>    background: lightgray;<br/>    border: 1px solid gray;<br/>    border-radius: 5px;<br/>    font-size: 16px;<br/>    padding: 9.5px;<br/>    margin: 0 0 10px;<br/>  }   <br/>&lt;/style&gt;<br/>&lt;h4&gt;Styling a div-element using jquery:&lt;/h4&gt;<br/>&lt;!-- declare an example script block by using the data-example-attribute --&gt;<br/>&lt;script data-example=&quot;example1&quot; type=&quot;text/javascript&quot;&gt;<br/>  // set font-color via jquery<br/>  $(function() {<br/>    $(&quot;#div&quot;).css({<br/>      'color': 'blue'<br/>    });<br/>  });        <br/>&lt;/script&gt;<br/>      <br/>&lt;h4&gt;Demo:&lt;/h4&gt;<br/>&lt;!-- the working example will be added here --&gt;<br/>&lt;div data-example=&quot;example1&quot;&gt;&lt;/div&gt;
-      </pre>
+      <pre>&lt;div id=&quot;div&quot; data-example=&quot;example1&quot; data-example-html=&quot;outer&quot;&gt;
+  Hello, I'm a div
+&lt;/div&gt;
+      
+&lt;style data-example=&quot;example1&quot;&gt;
+  /* style declaration */
+  #div {
+    background: lightgray;
+    border: 1px solid gray;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 9.5px;
+    margin: 0 0 10px;
+  }
+&lt;/style&gt;
+
+&lt;script data-example=&quot;example1&quot; type=&quot;text/javascript&quot;&gt;
+  // set font-color via jquery
+  $(function() {
+    $(&quot;#div&quot;).css({
+      'color': 'blue'
+    });
+  });
+&lt;/script&gt;</pre>
       <p>...will show up like this...</p>
       
-      <h4>Markup of a div-element</h4>
-      <!-- declare an example markup block by using the data-example-attribute -->
-      <div id="div" data-example="example1" data-example="outer">
+      <div id="div" data-example="example1" data-example-html="outer">
         Hello, I'm a div
       </div>
       
-      <h4>Styling a div-element using an inline style block:</h4>
-      <!-- declare an example style block by using the data-example-attribute -->
       <style data-example="example1">
         /* style declaration */
         #div {
@@ -57,8 +75,7 @@
           margin: 0 0 10px;
         }
       </style>
-      <h4>Styling a div-element using jquery:</h4>
-      <!-- declare an example script block by using the data-example-attribute -->
+
       <script data-example="example1" type="text/javascript">
         // set font-color via jquery
         $(function() {
@@ -67,10 +84,6 @@
           });
         });
       </script>
-      
-      <h4>Demo:</h4>
-      <!-- insert example markup here -->
-      <div data-example="example1"></div>
       
     </div>
     
