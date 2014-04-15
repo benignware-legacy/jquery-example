@@ -33,11 +33,13 @@ Declare any script-, style- or markup-block as an example by adding a data-examp
 
 The provided code will be inserted as a pre-tag in place.
 
+#### Customzing the insertion point
 You can customize the insertion point of your original working demo by specifying 'before' or 'after' on the 'example-insert'-data-attribute. Defaults to 'after'.
 ```
 <div id="div" data-example="example1" data-example-insert="before">Hello, I'm a div</div>
 ```
 
+#### Specify displayed html-part
 You may also specify if inner oder outer html of the given element should be displayed by adding a 'data-example-html'-attribute with value 'outer' or 'inner'. Defaults to 'inner'. 
 ```
 <div id="div" data-example="example1" data-example-html="outer">Hello, I'm a div</div>
