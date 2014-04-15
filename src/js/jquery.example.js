@@ -60,7 +60,6 @@
     var $element = $(element);
     
     var name = options.name;
-    var matchingExamples = $("*[data-example='" + name + "']");
     
     if ($(element).parents().map(function() {
       return $(this).data('example');
@@ -74,12 +73,14 @@
     var clone = $(contentElem.cloneNode(true))
       .removeAttr('data-example')
       .removeAttr('data-example-html')
+      .removeAttr('data-example-insert')
       .get(0);
       
       
     var code = isCodeElement(element);
     
     var htmlOption = $element.data('example-html');
+    var insertOption = $element.data('example-insert');
     var string = typeof htmlOption != 'undefined' ? clone[htmlOption + "HTML"] : clone.innerHTML; 
     //isCodeElement(element) ? clone.innerHTML : clone.outerHTML;
     
@@ -93,22 +94,13 @@
     if (prev.data(pluginName) == name) {
       insertPreAt = prev;
     }
-
-    $(pre).insertBefore(insertPreAt);
-
-    // if (code && $(clone).attr('type') != 'text/javascript') {
-      //$(clone).attr('type', 'text/javascript');
-      //$(clone).insertBefore(element);
-    // }
-   
-    if (isMarkupElement(contentElem)) {
-      matchingExamples.each(function() {
-        if (isEmptyElement(this)) {
-          $(this).replaceWith(element);
-        }
-      });
-    }
     
+    if (insertOption == "before") {
+      $(pre).insertBefore(insertPreAt);
+    } else {
+      $(pre).insertAfter(insertPreAt);
+    }
+   
     this.toString = function() {
       return name;
     };
