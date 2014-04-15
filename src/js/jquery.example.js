@@ -9,32 +9,55 @@
     className: 'example'
   };
   
-  function isCodeTag(elem) {
-    return !!(["SCRIPT", "STYLE"].indexOf(elem.nodeName) + 1);
+  function getLeadingWhiteSpaceCountWhile(string) {
+    var result = 0, characterCode = string.charCodeAt(0);
+    while (32 == characterCode || characterCode > 8 && characterCode < 14 && characterCode != 11 && characterCode != 12) {
+      characterCode = string.charCodeAt(++result);
+    }
+    return result;
   }
   
   function fixIndent(string) {
-    string = string.replace(/^\s*\n/gm, "") ;
-    string = string.replace(/(\s+$)/g, '');
-    var indent = string.search(/\S/);
+    string = string.replace(/^\s*\n/gm, "");
+    string = string.replace(/(\s+$)/gm, '');
     var lines = string.split("\n");
+    var indent = 0;
     for (var i = 0, line; line = lines[i]; i++) {
-      var regexp = new RegExp("\^\\s\{" + indent + "\}");
-      lines[i] = line.replace(regexp, "");
+      indent = getLeadingWhiteSpaceCountWhile(line);
+      if (indent > 0) {
+        if (i > 0) {
+          indent-= 2;
+        }
+        break;
+      }
+    }
+    for (var i = 0, line; line = lines[i]; i++) {
+      if (i == 0 || i == lines.length - 1) {
+        lines[i] = line.replace(/^\s+/, '');
+      } else {
+        var regexp = new RegExp("\^\\s\{" + indent + "\}");
+        lines[i] = line.replace(regexp, "");
+      }
     }
     string = lines.join("\n");
     return string;
   }
   
-  function isMarkupNode(elem) {
-    return !$(elem).is('script') && !$(elem).is('style') && !isEmptyNode(elem);
+  function isCodeElement(elem) {
+    return !!(["SCRIPT", "STYLE"].indexOf(elem.nodeName) + 1);
   }
   
-  function isEmptyNode(elem) {
+  function isMarkupElement(elem) {
+    return !$(elem).is('script') && !$(elem).is('style') && !isEmptyElement(elem);
+  }
+  
+  function isEmptyElement(elem) {
     return !$(elem).html().trim();
   }
   
   function Example(element, options) {
+    
+    var $element = $(element);
     
     var name = options.name;
     var matchingExamples = $("*[data-example='" + name + "']");
@@ -50,11 +73,16 @@
     pre.className = options.className;
     var clone = $(contentElem.cloneNode(true))
       .removeAttr('data-example')
+      .removeAttr('data-example-html')
       .get(0);
+      
+      
+    var code = isCodeElement(element);
     
-    var code = isCodeTag(element);
+    var htmlOption = $element.data('example-html');
+    var string = typeof htmlOption != 'undefined' ? clone[htmlOption + "HTML"] : clone.innerHTML; 
+    //isCodeElement(element) ? clone.innerHTML : clone.outerHTML;
     
-    var string = code ? clone.innerHTML : clone.outerHTML;
     string = fixIndent(string);
     
     pre.appendChild(document.createTextNode(string));
@@ -62,20 +90,20 @@
     var insertPreAt = element;
     
     var prev = $(element).prev();
-    if (prev.data(pluginName)) {
+    if (prev.data(pluginName) == name) {
       insertPreAt = prev;
     }
 
     $(pre).insertBefore(insertPreAt);
 
-    if (code && $(clone).attr('type') != 'text/javascript') {
-      $(clone).attr('type', 'text/javascript');
-      $(clone).insertBefore(element);
-    }
+    // if (code && $(clone).attr('type') != 'text/javascript') {
+      //$(clone).attr('type', 'text/javascript');
+      //$(clone).insertBefore(element);
+    // }
    
-    if (isMarkupNode(contentElem)) {
+    if (isMarkupElement(contentElem)) {
       matchingExamples.each(function() {
-        if (isEmptyNode(this)) {
+        if (isEmptyElement(this)) {
           $(this).replaceWith(element);
         }
       });
