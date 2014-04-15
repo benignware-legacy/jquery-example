@@ -38,6 +38,11 @@ You can customize the insertion point of your original working demo by specifyin
 <div id="div" data-example="example1" data-example-insert="before">Hello, I'm a div</div>
 ```
 
+You may also specify if inner oder outer html of the given element should be displayed by adding a 'data-example-html'-attribute with value 'outer' or 'inner'. Defaults to 'inner'. 
+```
+<div id="div" data-example="example1" data-example-html="outer">Hello, I'm a div</div>
+```
+
 #### Manually initialize the example-plugin
 By default, jquery-example auto-initializes examples on document.ready. If you don't want this behavior, you can switch it off by setting the "initOnReady"-Option directly after the script is loaded:
 ```
